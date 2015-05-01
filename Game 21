@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Greg's Gambits | Game of 21</title>
+<link href="greg.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+//<![CDATA[
+function game21()
+{
+		//initialize variables
+		var playerCard = 0;
+		var playerTotal = 0;
+		var dealerCard = 0;
+		var dealerTotal = 0;
+		var playerPoints = 100;
+		var dealerPoints = 100;
+		var lastHand = 0;
+		var drawAgain = " ";
+		
+		
+		//fill HTML page
+		document.getElementById("playerCard").innerHTML=("Your cards: " + playerCard);
+		document.getElementById("dealerCard").innerHTML=("Dealer cards: " + dealerCard);
+		document.getElementById("playerPoints").innerHTML=(playerPoints);
+		document.getElementById("dealerPoints").innerHTML=(dealerPoints);
+		document.getElementById("winner").innerHTML=("&nbsp;");
+		
+		//loop repeats until troll or player get 200 points
+while ((playerPoints < 200) && (dealerPoints < 200))
+{
+	//get player's initial cards
+	var temp = (Math.floor(Math.random() * 10 + 1));
+	var playerCard = (Math.floor(Math.random() * 10 + 1));
+	var playerTotal = temp + playerCard;
+	var playerCard = temp + " " + playerCard;
+	
+	//get dealer's cards
+	var numCards = (Math.floor(Math.random() * 3 + 1))
+	switch(numCards)
+	{
+		case 1:
+			var dTemp = (Math.floor(Math.random() * 10 + 1));
+			var dealerCard = (Math.floor(Math.random() * 10 + 1));
+			var dealerTotal = dTemp + dealerCard;
+			var dealerCard = dTemp + " " + dealerCard;
+			break;
+		case 2:
+			var dTemp = (Math.floor(Math.random() * 10 + 1));
+			var dealerCard = (Math.floor(Math.random() * 10 + 1));
+			var dealerTotal = dTemp + dealerCard;
+			var dealerCard = dTemp + " " + dealerCard;
+			var dTemp = (Math.floor(Math.random() * 10 + 1));
+			var dealerTotal = dTemp + dealerTotal;
+			var dealerCard = dTemp + " " + dealerCard;
+			break;
+		case 3:
+			var dTemp = (Math.floor(Math.random() * 10 + 1));
+			var dealerCard = (Math.floor(Math.random() * 10 + 1));
+			var dealerTotal = dTemp + dealerCard;
+			var dealerCard = dTemp + " " + dealerCard;
+			var dTemp = (Math.floor(Math.random() * 10 + 1));
+			var dealerTotal = dTemp + dealerTotal;
+			var dealerCard = dTemp + " " + dealerCard;
+			break;
+		}
+	//display player's cards
+	document.getElementById("playerCard").innerHTML = ("Your cards: " + playerCard);
+	
+	//ask for another card
+	while (drawAgain != 'n')
+	{
+		drawAgain = prompt("Would you like to draw another card? \nYes (y) or No (n)? Or type (q) to quit.", " ");
+		switch(drawAgain)
+		{
+			case 'y':
+				var temp = (Math.floor(Math.random() * 10 + 1));
+				var playerTotal = temp + playerTotal;
+				playerCard = playerCard + " " + temp;
+				document.getElementById("playerCard").innerHTML = ("Your cards: " + playerCard);
+				break;
+			case 'n':
+				lastHand = playerCard;
+				document.getElementById("lastHand").innerHTML = ("Your last deal: " + lastHand)
+				document.getElementById("dealerCard").innerHTML = ("Dealer's last hand: " + dealerCard);
+				break;
+			case 'q':
+				break;
+			default:
+				var temp = (Math.floor(Math.random() * 10 + 1));
+				var playerTotal = temp + playerTotal;
+				playerCard = playerCard + " " + temp;
+				document.getElementById("playerCard").innerHTML = ("Your cards: " + playerCard);
+				break;
+			}
+			if (drawAgain == 'q') break;
+			if (drawAgain == null) break;
+		}
+		if (drawAgain == 'q') break;
+		if (drawAgain == null) break;
+		var drawAgain = " ";
+		
+		//find the winner
+		if (((playerTotal > dealerTotal) && (playerTotal < 22)) || ((playerTotal < 22) && (dealerTotal > 21)))
+		{
+			document.getElementById("winner").innerHTML=("You win this deal!");
+			playerPoints = playerPoints + 10;
+			dealerPoints = dealerPoints - 10;
+			document.getElementById("playerPoints").innerHTML = (playerPoints);
+			document.getElementById("dealerPoints").innerHTML = (dealerPoints);
+		}
+		
+		if (((playerTotal < dealerTotal) && (dealerTotal < 22)) || ((playerTotal > 21) && (dealerTotal < 22)))
+		{
+			document.getElementById("winner").innerHTML=("You lost this deal.");
+			playerPoints = playerPoints - 10;
+			dealerPoints = dealerPoints + 10;
+			document.getElementById("playerPoints").innerHTML = (playerPoints);
+			document.getElementById("dealerPoints").innerHTML = (dealerPoints);
+		}
+		
+		if ((playerTotal == dealerTotal) || ((playerTotal > 21) && (dealerTotal > 21)))
+		{
+			document.getElementById("winner").innerHTML = ("It's a tie.");
+		}
+	}
+	//display the final winner
+	if (drawAgain == null)
+		document.getElementById("winner").innerHTML = ("Bye Bye now. Play again soon.");
+	if (drawAgain == 'q')
+		document.getElementById("winner").innerHTML = ("Bye Bye now. Play again soon.");
+	if (playerPoints >= 200)
+		document.getElementById("winner").innerHTML = ("Good Job! You won!");
+	if (dealerPoints >= 200)
+		document.getElementById("winner").innerHTML = ("Sorry! You lose. Dealer wins.");
+}
+//]]> 
+</script>
+<style type="text/css">
+<!--
+.style1 {
+	font-size: 18px
+}
+-->
+</style>
+</head>
+
+<body>
+<div id="container"> <img src="images/superhero.jpg" width="120" height="120" class="floatleft" alt="super hero"/>
+  <h1 class="aligncenter">The Game of 21</h1>
+  <p class="style1 aligncenter">This is the card game 21. You and the dealer will both be given 2 cards. 
+    Your card numbers will be visible for you to see; the dealers will not. 
+    The one who has the closest to 21 at the end of the draw, wins. If you go over, you bust and lose. Good luck!</p>
+  <div style ="clear:both;"></div>
+  <div id="nav">
+    <p><a href="index.html">Home</a> <a href="greg.html">About Greg</a> <a href="play_games.html">Play a Game</a> <a href="signin.html">Sign In</a> <a href="contact.html">Contact Us</a> <a href="greg_aboutyou.html">Tell Greg About You</a></p>
+  </div>
+  <div id="content">
+    <table class="center" width = "85%" cellpadding="5" cellspacing="0" border = "0">
+      <tr>
+        <td colspan = "4" align="center"><input class="center aligncenter" type="button" id="battle" value="DEAL!" onclick="game21();" /></td>
+      </tr>
+      <tr>
+        <td><span class="style1">YOUR STATS</span></td>
+        <td><span class="style1">DEALERS STATS</span></td>
+      </tr>
+      <tr>
+        <td id = "playerCard"><span class="style1">Your Cards</span></td>
+        <td id = "dealerCard"><span class="style1">Dealer Cards</span></td>
+      </tr>
+      <tr>
+        <td colspan = "2" id = "lastHand"><span class="style1">*** ***</span></td>
+      </tr>
+      <tr>
+        <td colspan = "2"><span class="style1">The winner is:</span></td>
+      </tr>
+      <tr>
+        <td colspan = "2" id="winner" class="style1">*** ***</td>
+      </tr>
+      <tr>
+        <td><span class="style1">Your points: </span></td>
+        <td><span class="style1">Dealer points:</span></td>
+      </tr>
+      <tr>
+        <td class="style1" id = "playerPoints">100</td>
+        <td class="style1" id = "dealerPoints">100</td>
+      </tr>
+    </table>
+  </div>
+  <div id="footer">Copyright &copy; 2013 Greg's Gambits<br />
+    <a href="mailto:kevinnelson.1029@yahoo.com"> kevinnelson.1029@yahoo.com</a></div>
+</div>
+</body>
+</html>
