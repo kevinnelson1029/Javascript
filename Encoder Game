@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Greg's Gambits | Unbreakable Secret Message Encoder</title>
+<link href="greg.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+//<![CDATA[
+function encodeIt()
+{
+ 		 document.getElementById("message").innerHTML  = ("<strong>&nbsp;</strong>");
+		 //initialize variables
+		 var msg = prompt("Enter your message." , " ");
+		 var encryptMsg = "All uppercase and lowercase alphabetical letters are switched and then 5 is added to the ASCII code of that letter. " +
+						  "Except for the letter z, it is subtracted by 5. 70 is also added to the ASCII code for the symbols 91-96. " +
+						  "10 is added to the ASCII code under 65. 44 is added to the ASCII code 123-126."
+		 var newmsg = " ";
+		 var upAndLowCase = 32;
+		 var newCode = 0;
+		 var symbols = 70;
+		 var charNum = 10;
+		 var randomNum = 5;
+		 var brackSyms = 44;
+		 
+		 //the loop encodes each letter in the message string
+		 for (var j = 0; j < msg.length; j++) 
+		 {
+		  	 //check for upppercase letters and encode them
+			 if ((msg.charCodeAt(j)>=65) && (msg.charCodeAt(j)<=90))
+			 {
+				newCode = (upAndLowCase + msg.charCodeAt(j) + randomNum);
+			 }
+			else 
+			//check for lowercase letters and encode them
+				 if ((msg.charCodeAt(j)>=97) && (msg.charCodeAt(j)<=121))
+				 {
+					newCode = (msg.charCodeAt(j) - upAndLowCase + randomNum);
+				 }
+				else if (msg.charCodeAt(j)==122)
+				 {
+					newCode = (msg.charCodeAt(j) - upAndLowCase - randomNum);
+				 }
+				 else
+			//check for numbers and special characters and encode them
+					if ((msg.charCodeAt(j) > 90) && (msg.charCodeAt(j) < 97))
+					{
+						newCode = (msg.charCodeAt(j) + symbols);
+					}
+					else if (msg.charCodeAt(j) < 65)
+					{
+						newCode = (msg.charCodeAt(j) + charNum);
+					}
+					else if ((msg.charCodeAt(j) > 122) && (msg.charCodeAt(j) <= 126 ))
+					{
+						newCode = (msg.charCodeAt(j) + brackSyms);
+					}
+			//add each encoded character to the new message
+			 newmsg = newmsg + " " + String.fromCharCode(newCode); 
+		 }
+		 //display the encoded message on the web page
+		 document.getElementById("secret").innerHTML = ("<strong>" + newmsg + "</strong>");
+		 //decide if original message should be shown
+		 var messageChoice = prompt("Do you want the original message displayed? Yes or No?", " ");
+		 if ((messageChoice.charAt(0) == 'y') || (messageChoice.charAt(0) == 'Y'))
+		 {
+			document.getElementById("message").innerHTML = ("<strong>" + msg + "</strong>");
+		 }
+		 //decide if encryption code should be given
+		 var encryptionChoice = prompt("Do you want the encryption details displayed? Yes or No?", " ");
+		 if ((encryptionChoice.charAt(0) == 'y') || (encryptionChoice.charAt(0) == 'Y'))
+		 {
+			document.getElementById("encryption").innerHTML = ("<strong><p>" + encryptMsg + "</p></strong>");
+		 }
+}
+//]]> 
+</script>
+</head>
+
+<body>
+<div id="container"> <img src="images/superhero.jpg" width="120" height="120" class="floatleft" alt="Superhero"/>
+  <h1 id="logo"><em>Unbreakable Secret Message Encoder</em></h1>
+  <p>&nbsp;</p>
+  <div id="nav">
+    <p><a href="index.html">Home</a> <a href="greg.html">About Greg</a> <a href="play_games.html">Play a Game</a> <a href="signin.html">Sign In</a> <a href="contact.html">Contact Us</a> <a href="greg_aboutyou.html">Tell Greg About You</a></p>
+  </div>
+  <div id="content">
+    <h2>Write A Message and Encode It</h2>
+    <p>
+      <input type="button" id="encode" value="Enter your message" onclick="encodeIt();" />
+    </p>
+    <table class="center" cellpadding="2" width = "90%" border="1">
+      <tr>
+        <td class="aligncenter" id="secret"><p>Encoded Message</p></td>
+      </tr>
+      <tr>
+        <td class="aligncenter" id="message"><p>Original Message</p></td>
+      </tr>
+      <tr>
+        <td class="aligncenter" id="encryption"><p>Encryption Details</p></td>
+      </tr>
+    </table>
+  </div>
+  <div id="footer">Copyright &copy; 2013 Greg's Gambits<br />
+    <a href="mailto:kevinnelson.1029@yahoo.com"> kevinnelson.1029@yahoo.com</a></div>
+</div>
+</body>
+</html>
